@@ -7,14 +7,14 @@ table.insert(option_fns,
         tooltip =
         "Fixes Extra Dose interaction with Coat 2nd punch and Dash strike."
     })
-table.insert(apply_fns, {
+table.insert(patch_fns, {
     key = "ExtraDoseFix",
-    fn = function()
+    fn = function(plan)
         if not TraitData.DoubleStrikeChanceBoon then return end
-        backup(TraitData.DoubleStrikeChanceBoon, "PropertyChanges")
-        table.insert(TraitData.DoubleStrikeChanceBoon.PropertyChanges[1].WeaponNames, "WeaponSuit2")
-        table.insert(TraitData.DoubleStrikeChanceBoon.PropertyChanges[1].WeaponNames, "WeaponSuitDash")
-        table.insert(TraitData.DoubleStrikeChanceBoon.PropertyChanges[4].WeaponNames, "WeaponSuit2")
-        table.insert(TraitData.DoubleStrikeChanceBoon.PropertyChanges[4].WeaponNames, "WeaponSuitDash")
+        local propertyChanges = TraitData.DoubleStrikeChanceBoon.PropertyChanges
+        plan:appendUnique(propertyChanges[1], "WeaponNames", "WeaponSuit2")
+        plan:appendUnique(propertyChanges[1], "WeaponNames", "WeaponSuitDash")
+        plan:appendUnique(propertyChanges[4], "WeaponNames", "WeaponSuit2")
+        plan:appendUnique(propertyChanges[4], "WeaponNames", "WeaponSuitDash")
     end
 })

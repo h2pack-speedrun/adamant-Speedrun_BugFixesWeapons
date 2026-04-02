@@ -7,11 +7,10 @@ table.insert(option_fns,
         tooltip =
         "Fixes Tidal Ring not hitting the same mob twice with Circe."
     })
-table.insert(apply_fns, {
+table.insert(patch_fns, {
     key = "TidalRingFix",
-    fn = function()
+    fn = function(plan)
         if not ProjectileData or not ProjectileData.PoseidonCastSplashSplinter then return end
-        backup(ProjectileData.PoseidonCastSplashSplinter, "ImmunityDuration")
-        ProjectileData.PoseidonCastSplashSplinter.ImmunityDuration = 0
+        plan:set(ProjectileData.PoseidonCastSplashSplinter, "ImmunityDuration", 0)
     end
 })

@@ -7,12 +7,10 @@ table.insert(option_fns,
         tooltip =
         "Fixes Axe OAtk, Blade OSpec not benefiting correctly from channeling bonus."
     })
-table.insert(apply_fns, {
+table.insert(patch_fns, {
     key = "StagedOmegaFix",
-    fn = function()
-        backup(WeaponData.WeaponDaggerThrow, "MinWeaponChargeTime")
-        backup(WeaponData.WeaponAxeSpin, "MinWeaponChargeTime")
-        WeaponData.WeaponDaggerThrow.MinWeaponChargeTime = 0.05
-        WeaponData.WeaponAxeSpin.MinWeaponChargeTime     = 0.05
+    fn = function(plan)
+        plan:set(WeaponData.WeaponDaggerThrow, "MinWeaponChargeTime", 0.05)
+        plan:set(WeaponData.WeaponAxeSpin, "MinWeaponChargeTime", 0.05)
     end
 })
