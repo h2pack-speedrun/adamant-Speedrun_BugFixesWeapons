@@ -5,7 +5,7 @@ schemaVersion = "0.0.1"
 namespace = "adamant"
 name = "Speedrun_BugFixesWeapons"
 description = "Fixes various bugs with weapons and boons interacting with weapons."
-versionNumber = "0.0.1"
+versionNumber = "1.0.0"
 websiteUrl = "https://github.com/h2pack-speedrun/adamant-Speedrun_BugFixesWeapons"
 containsNsfwContent = false
 
