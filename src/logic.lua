@@ -1,9 +1,9 @@
 -- luacheck: globals BugFixesWeaponsInternal
 local internal = BugFixesWeaponsInternal
 
-function internal.BuildPatchPlan(plan, activeStore)
+function internal.BuildPatchPlan(plan, _, store)
     for _, b in ipairs(internal.patch_fns) do
-        if activeStore.read(b.key) and b.fn then
+        if store.read(b.key) and b.fn then
             b.fn(plan)
         end
     end

@@ -24,7 +24,7 @@ table.insert(patch_fns, {
 })
 
 table.insert(hook_fns, function()
-    lib.hooks.Wrap(internal, "StartNewRun", function(baseFunc, prevRun, args)
+    lib.hooks.Wrap("StartNewRun", function(baseFunc, prevRun, args)
         if not internal.store.read("SeleneFix") or not lib.isModuleEnabled(internal.store, internal.PACK_ID) then
             return baseFunc(prevRun, args)
         end
@@ -35,7 +35,7 @@ table.insert(hook_fns, function()
         return currentRun
     end)
 
-    lib.hooks.Wrap(internal, "SpawnRoomReward", function(baseFunc, eventSource, args)
+    lib.hooks.Wrap("SpawnRoomReward", function(baseFunc, eventSource, args)
         if not internal.store.read("SeleneFix") or not lib.isModuleEnabled(internal.store, internal.PACK_ID) then
             return baseFunc(eventSource, args)
         end

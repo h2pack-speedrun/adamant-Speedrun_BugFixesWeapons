@@ -24,9 +24,9 @@ local PLUGIN_GUID = _PLUGIN.guid
 ---@field PACK_ID string|nil
 ---@field MODULE_ID string|nil
 ---@field BuildStorage fun(): StorageSchema|nil
----@field BuildPatchPlan fun(plan: MutationPlan, activeStore: StoreReader)|nil
----@field RegisterHooks fun()|nil
----@field DrawTab fun(imgui: table, session: AuthorSession)|nil
+---@field BuildPatchPlan fun(plan: MutationPlan, host: AuthorHost, store: ManagedStore)|nil
+---@field RegisterHooks fun(host: AuthorHost, store: ManagedStore)|nil
+---@field DrawTab fun(imgui: table, session: AuthorSession, host: AuthorHost)|nil
 BugFixesWeaponsInternal = BugFixesWeaponsInternal or {}
 ---@type BugFixesWeaponsInternal
 local internal = BugFixesWeaponsInternal
@@ -57,28 +57,24 @@ local function init()
     import("logic.lua")
     import("ui.lua")
 
-    local definition = lib.prepareDefinition(internal, {
-        modpack = PACK_ID,
-        id = MODULE_ID,
-        name = "Bug Fixes: Weapons",
-        tooltip = "Weapon-related fixes for speedrun consistency.",
-        affectsRunData = true,
-        storage = internal.BuildStorage(),
-        patchPlan = internal.BuildPatchPlan,
-    })
-
-    local store, session = lib.createStore(config, definition)
-    internal.store = store
-
-    lib.createModuleHost({
+    local host, store = lib.createModule({
+        owner = internal,
         pluginGuid = PLUGIN_GUID,
-        definition = definition,
-        store = store,
-        session = session,
-        hookOwner = internal,
+        config = config,
+        definition = {
+            modpack = PACK_ID,
+            id = MODULE_ID,
+            name = "Bug Fixes: Weapons",
+            tooltip = "Weapon-related fixes for speedrun consistency.",
+            storage = internal.BuildStorage(),
+        },
+        registerPatchMutation = internal.BuildPatchPlan,
         registerHooks = internal.RegisterHooks,
         drawTab = internal.DrawTab,
     })
+    internal.store = store
+
+    host.activate()
     internal.standaloneUi = lib.standaloneHost(PLUGIN_GUID)
 end
 
