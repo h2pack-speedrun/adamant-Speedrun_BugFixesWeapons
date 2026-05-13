@@ -1,18 +1,23 @@
--- luacheck: globals BugFixesWeaponsInternal
-local internal = BugFixesWeaponsInternal
+local module = {}
+local data = nil
 
-function internal.BuildPatchPlan(plan, _, store)
-    for _, b in ipairs(internal.patch_fns) do
+function module.buildPatchPlan(plan, _, store)
+    for _, b in ipairs(data.patches) do
         if store.read(b.key) and b.fn then
             b.fn(plan)
         end
     end
 end
 
-function internal.RegisterHooks()
-    for _, fn in ipairs(internal.hook_fns) do
-        fn()
+function module.registerHooks(host, store)
+    for _, fn in ipairs(data.hooks) do
+        fn(host, store)
     end
 end
 
-return internal
+function module.bind(moduleData)
+    data = moduleData
+    return module
+end
+
+return module
