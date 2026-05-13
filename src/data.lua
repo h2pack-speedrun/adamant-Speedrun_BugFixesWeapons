@@ -26,7 +26,7 @@ function data.buildStorage()
             table.insert(storage, {
                 type = "bool",
                 alias = option.alias,
-                default = option.default,
+                default = option.default == true,
             })
         else
             error(("Unsupported option type '%s' in %s"):format(tostring(option.type), PACK_ID .. ".BugFixesWeapons"))
