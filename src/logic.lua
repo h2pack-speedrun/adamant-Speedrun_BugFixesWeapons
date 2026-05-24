@@ -2,9 +2,9 @@ local module = {}
 local data = nil
 
 function module.buildPatchPlan(plan, _, store)
-    for _, b in ipairs(data.patches) do
-        if store.read(b.key) and b.fn then
-            b.fn(plan)
+    for _, patch in ipairs(data.patches) do
+        if store.read(patch.key) and patch.fn then
+            patch.fn(plan)
         end
     end
 end

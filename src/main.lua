@@ -45,8 +45,7 @@ local function init()
     end)
     host.mutation.patch(logic.buildPatchPlan)
     logic.registerHooks(host, store)
-    local ok = host.activate()
-    if not ok then
+    if not host.activate() then
         return
     end
 end
