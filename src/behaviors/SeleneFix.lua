@@ -20,7 +20,7 @@ return {
     },
     hooks = {
         function(host, store)
-            lib.hooks.Wrap("StartNewRun", function(baseFunc, prevRun, args)
+            host.hooks.wrap("StartNewRun", function(baseFunc, prevRun, args)
                 if not store.read("SeleneFix") or not host.isEnabled() then
                     return baseFunc(prevRun, args)
                 end
@@ -31,7 +31,7 @@ return {
                 return currentRun
             end)
 
-            lib.hooks.Wrap("SpawnRoomReward", function(baseFunc, eventSource, args)
+            host.hooks.wrap("SpawnRoomReward", function(baseFunc, eventSource, args)
                 if not store.read("SeleneFix") or not host.isEnabled() then
                     return baseFunc(eventSource, args)
                 end

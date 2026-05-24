@@ -1,11 +1,10 @@
--- luacheck: globals lib
 local module = {}
 local data = nil
 
-local function DrawOptions(ui, uiState)
+local function DrawOptions(draw, state)
     for _, option in ipairs(data.options) do
         if option.type == "checkbox" then
-            lib.widgets.checkbox(ui, uiState, option.alias, {
+            draw.widgets.checkbox(state.get(option.alias), {
                 label = option.label,
                 tooltip = option.tooltip,
             })
@@ -13,8 +12,8 @@ local function DrawOptions(ui, uiState)
     end
 end
 
-function module.drawTab(ui, uiState)
-    DrawOptions(ui, uiState)
+function module.drawTab(draw, state)
+    DrawOptions(draw, state)
 end
 
 function module.bind(moduleData)
